@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include href="parts/head.html" />
+</head>
+<body>
+	<include href="parts/nav-public.html" />
+	<div class="container">
+		<h1>401 Not Authorized</h1>
+		<p>The page you requested <code>{{ @PATH | esc }}</code> is not accessible. Please log in or change accounts and try again.</p>
+	</div>
+	<include href="parts/footer-public.html" />
+</body>
+</html>

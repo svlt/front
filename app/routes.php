@@ -1,0 +1,31 @@
+<?php
+
+$fw = App::fw();
+
+// Index (public pages)
+$fw->route('GET /', 'Controller\\Index->index');
+
+// Users
+$fw->route('GET /u/@username', 'Controller\\User->base');
+$fw->route('POST /register', 'Controller\\User->register');
+
+// Posts
+$fw->route('GET /post', 'Controller\\Post->post');
+$fw->route('GET /post/@id', 'Controller\\Post->single');
+
+// Handle errors
+$fw->set('ONERROR', function(Base $fw) {
+	$controller = new Controller\Index;
+	switch($fw->get('ERROR.code')) {
+		case 404:
+			$fw->set('title', '404 Not Found');
+			echo Template::instance()->render("error/404.html");
+			break;
+		case 401:
+			$fw->set('title', '404 Not Authorized');
+			echo Template::instance()->render("error/401.html");
+			break;
+		default:
+			echo Template::instance()->render("error/general.html");
+	}
+});

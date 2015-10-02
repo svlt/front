@@ -1,0 +1,7 @@
+assets/bower_components/
+assets/css/
+assets/js/*.js
+assets/node_modules/
+tmp/
+vendor/
+config.php

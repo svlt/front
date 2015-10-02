@@ -1,0 +1,163 @@
+/*! Social Vault | MIT License | github.com/svlt */
+html, body {
+	height: 100%;
+}
+body {
+	font-size: $font-size-body;
+}
+
+// Align icons in buttons
+.btn .icon {
+	vertical-align: middle;
+}
+
+// Card overrides
+.card-default {
+	background-color: $dropdown-bg;
+}
+.card-title {
+	font-size: $font-size-base;
+	margin-bottom: $headings-margin-bottom;
+	&:last-child {
+		margin-bottom: 0;
+	}
+}
+
+// Extra margin removal
+.card-block > :last-child,
+.media-body > :last-child,
+.media-list > .media:last-child, {
+	margin-bottom: 0;
+}
+
+// Dropdown menu overrides
+.dropdown-menu {
+	font-size: $font-size-body;
+}
+
+// Profile card
+.card-profile-banner {
+	background-color: $gray;
+	min-height: $profile-card-cover-size;
+}
+.card-profile .card-title {
+	font-size: $font-size-lg;
+}
+.card-profile-pic {
+	@include center-block;
+	width: $profile-img-size-card;
+}
+.card-profile-img {
+	margin-top: -$profile-img-size-card / 2;
+	width: $profile-img-size-card;
+	height: $profile-img-size-card;
+	border-radius: 100%;
+}
+
+// About card
+.list-unstyled .icon {
+	margin-right: $font-size-base / 4;
+}
+
+// Stream card (stacked cards in a single card)
+.card-stream {
+	> .card-block:first-child .form-group {
+		margin-bottom: 0;
+	}
+	> .card-block:not(:last-child) {
+		border-bottom: $card-border-width solid $card-border-color;
+	}
+}
+
+// Posts and comments
+.media-post {
+	> .media-body > header {
+		@include clearfix;
+		.name {
+			@include pull-left;
+			font-weight: bold;
+			color: inherit;
+		}
+		.timestamp {
+			@include pull-right;
+			font-size: $font-size-sm;
+			color: $text-muted;
+		}
+	}
+	.profile-pic {
+		width: $profile-img-size-post;
+		height: $profile-img-size-post;
+	}
+}
+.media-comment {
+	.name {
+		font-weight: bold;
+		color: inherit;
+		&:after {
+			content: ':';
+		}
+	}
+	.profile-pic {
+		width: $profile-img-size-comment;
+		height: $profile-img-size-comment;
+	}
+}
+
+// Notifications
+.notification {
+	@include clearfix;
+	.icon {
+		@include pull-left;
+		margin-right: $spacer / 2;
+		line-height: inherit;
+	}
+	.timestamp {
+		@include pull-right;
+		font-size: $font-size-sm;
+		color: $text-muted;
+	}
+}
+.popover-content-notifications {
+	min-width: 244px;
+	hr {
+		margin-top: $spacer * .75;
+		margin-bottom: $spacer * .75;
+	}
+	.notification-list {
+		margin-bottom: 0;
+	}
+}
+.notification-list {
+	list-style: none;
+	padding-left: 0;
+}
+.card-block-notification {
+	.notification + * {
+		margin-left: $spacer * 1.5;
+	}
+	.card-post, .card-deck {
+		margin-top: $spacer;
+	}
+}
+.notification-imgs {
+	img {
+		margin-top: $spacer / 2;
+		width: $profile-img-size-notif;
+		height: $profile-img-size-notif;
+	}
+}
+
+// Recommended buddies card
+.card-recommended .profile-pic {
+	width: $profile-img-size-post;
+	height: $profile-img-size-post;
+}
+
+// Copyright card and footer row
+.row-copyright {
+	margin-top: $spacer * 2;
+}
+.card-copyright .nav-link:not(:first-child),
+.row-copyright .nav-link {
+	padding-left: $spacer;
+}

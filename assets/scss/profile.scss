@@ -1,0 +1,28 @@
+.profile-pic {
+	border-radius: 100%;
+}
+.profile-banner,
+.card-profile-banner {
+	background-position: center center;
+	background-size: cover;
+}
+.jumbotron-profile {
+	margin-top: -$grid-gutter-width;
+	text-align: center;
+	color: #fff;
+	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
+	img {
+		width: $profile-img-size-card;
+		height: $profile-img-size-card;
+		margin-top: 2rem;
+	}
+	h3 {
+		margin-top: 1rem;
+	}
+	p {
+		@include center-block;
+		margin-bottom: 2rem;
+		max-width: 22rem;
+		font-size: 1rem;
+	}
+}
