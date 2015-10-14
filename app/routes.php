@@ -6,8 +6,8 @@ $fw = App::fw();
 $fw->route('GET /', 'Controller\\Index->index');
 $fw->route('GET /register', 'Controller\\Index->register');
 $fw->route('POST /register', 'Controller\\Index->registerPost');
-$fw->route('GET /login', 'Controller\\Index->login');
-$fw->route('POST /login', 'Controller\\Index->loginPost');
+$fw->route('GET /auth', 'Controller\\Index->auth');
+$fw->route('POST /auth', 'Controller\\Index->authPost');
 
 // Users
 $fw->route('GET /u/@username', 'Controller\\User->base');

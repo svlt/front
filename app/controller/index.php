@@ -20,11 +20,11 @@ class Index extends \Controller {
 		// TODO: Verify registration data, setup session, redirect to stream
 	}
 
-	function login($fw) {
-		$this->_render('index/login.html');
+	function auth($fw) {
+		$this->_render('index/auth.html');
 	}
 
-	function loginPost($fw) {
+	function authPost($fw) {
 		// TODO: Verify login data, setup session, redirect to stream
 	}
 

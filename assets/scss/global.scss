@@ -29,6 +29,9 @@ body {
 .media-list > .media:last-child, {
 	margin-bottom: 0;
 }
+.jumbotron-fluid-top {
+	margin-top: -$spacer;
+}
 
 // Dropdown menu overrides
 .dropdown-menu {

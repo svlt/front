@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<include href="parts/head.html" />
+</head>
+<body>
+	<div class="login-form-container">
+		<form class="login-form" action="{{ @BASE }}/auth" method="post">
+			<h1 class="text-primary">
+				<i class="icon icon-svlt"></i>
+			</h1>
+			<fieldset class="form-group">
+				<label class="sr-only" for="username">Username</label>
+				<input type="text" class="form-control" id="username" placeholder="Username">
+			</fieldset>
+			<fieldset class="form-group">
+				<label class="sr-only" for="password">Password</label>
+				<input type="password" class="form-control" id="password" placeholder="Password">
+			</fieldset>
+			<br>
+			<button class="btn btn-primary" type="submit">Sign In</button>
+			<a class="btn btn-secondary" href="{{ @BASE }}/register">Register</a>
+		</form>
+	</div>
+</body>
+</html>

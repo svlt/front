@@ -5,9 +5,38 @@
 </head>
 <body>
 	<include href="parts/nav-public.html" />
-	<div class="container">
-		<h1>Welcome to the party!</h1>
-		<p>svlt/front is still in early development, but it's a thing now!</p>
+	<div class="jumbotron jumbotron-fluid jumbotron-fluid-top">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-6">
+					<h2>{{ @site.name }} is a social network you don't have to trust.</h2>
+					<ul class="landing-promo-list">
+						<li>
+							<span class="icon icon-key"></span>
+							Posts are encrypted on your computer before they're published
+						</li>
+						<li>
+							<span class="icon icon-typing"></span>
+							Off-the-record instant messaging keeps conversations private
+						</li>
+						<li>
+							<span class="icon icon-mask"></span>
+							No analytics, banner ads, or other user tracking
+						</li>
+						<li>
+							<span class="icon icon-shield"></span>
+							Open Source and publicly auditable source code
+						</li>
+					</ul>
+				</div>
+				<div class="col-sm-6 text-right">
+					<a href="{{ @BASE }}/register" class="btn btn-primary">Create an Account</a>
+					<p>Free for basic personal use</p>
+
+					<p>Already have an account? <a href="{{ @BASE }}/auth">Sign In</a></p>
+				</div>
+			</div>
+		</div>
 	</div>
 	<include href="parts/footer-public.html" />
 </body>
