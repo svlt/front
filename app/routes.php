@@ -4,10 +4,13 @@ $fw = App::fw();
 
 // Index (public pages)
 $fw->route('GET /', 'Controller\\Index->index');
+$fw->route('GET /register', 'Controller\\Index->register');
+$fw->route('POST /register', 'Controller\\Index->registerPost');
+$fw->route('GET /login', 'Controller\\Index->login');
+$fw->route('POST /login', 'Controller\\Index->loginPost');
 
 // Users
 $fw->route('GET /u/@username', 'Controller\\User->base');
-$fw->route('POST /register', 'Controller\\User->register');
 
 // Posts
 $fw->route('GET /post', 'Controller\\Post->post');

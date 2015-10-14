@@ -28,6 +28,9 @@ gulp.task('js', function() {
 		'bower_components/tether/dist/js/tether.min.js',
 		'bower_components/bootstrap/dist/js/bootstrap.min.js',
 		'bower_components/geopattern/js/geopattern.min.js',
+		'bower_components/openpgp/dist/openpgp.min.js',
+		'bower_components/sjcl/sjcl.js',
+		'bower_components/entropizer/dist/entropizer.min.js',
 		'js/src/script.js'
 	];
 	gulp.src(scripts)

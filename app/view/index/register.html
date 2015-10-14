@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include href="parts/head.html" />
+</head>
+<body>
+	<include href="parts/nav-public.html" />
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<h1>Register</h1>
+				<br>
+				<form id="frm-register" style="display: block;">
+					<fieldset class="form-group">
+						<label for="register-name">Display Name</label>
+						<input class="form-control" type="text" name="name" id="register-name" required autofocus>
+						<small class="text-muted">This is the name that will be displayed publicly for people trying to find you. It can be changed at any time.</small>
+					</fieldset>
+					<fieldset class="form-group">
+						<label for="register-username">Username</label>
+						<input class="form-control" type="text" name="username" id="register-username" required>
+						<small class="text-muted">Your username will be used to log in instead of an email address.</small>
+					</fieldset>
+					<fieldset class="form-group">
+						<label for="register-passphrase">Passphrase</label>
+						<input class="form-control" type="password" name="passphrase" id="register-passphrase" required>
+						<small class="text-muted">Choose a strong and unique passphrase to protect your account.</small>
+					</fieldset>
+					<div class="text-right">
+						<button type="submit" class="btn btn-secondary btn-sm">Continue <span class="icon icon-chevron-right"></span></button>
+					</div>
+				</form>
+
+				<div id="msg-keygen" style="display: none;">
+					<p class="text-center">Generating keys&hellip;</p>
+				</div>
+
+				<form id="frm-finalize" style="display: none;" action="{{ @BASE }}/register" method="post">
+					<input type="hidden" id="finalize-passhash" name="passhash">
+					<input type="hidden" id="finalize-keypair-fingerprint" name="keypair-fingerprint">
+					<input type="hidden" id="finalize-keypair-private" name="keypair-private">
+					<input type="hidden" id="finalize-keypair-public" name="keypair-public">
+					<input type="hidden" id="finalize-symmkey" name="symmkey">
+
+					<p class="lead">You're ready to go!</p>
+
+					<button type="submit" class="btn btn-success">Finalize Account</button>
+					<a href="javascript:void(0);" id="btn-export-keys" class="btn btn-secondary">Export Keys</a>
+				</form>
+			</div>
+		</div>
+	</div>
+	<include href="parts/footer-public.html" />
+	<script type="text/javascript">
+		$('#frm-register').submit(function(e) {
+			e.preventDefault();
+			var $this = $(this);
+
+			// Clear existing errors
+			$this.find('.form-group').removeClass('has-error');
+
+			// Confirm continuing with insecure passphrase
+			if($this.find('#register-passphrase').parents('.form-group').hasClass('has-warning')) {
+				if(!confirm('This passphrase is not secure. Are you sure you want to continue?')) {
+					$('#register-passphrase').focus();
+					return;
+				}
+			}
+
+			// Show key generation message
+			$('#frm-register, #msg-keygen').toggle();
+
+			// Generate key
+			var options = {
+				numBits: 2048,
+				userId: $('#register-username').val() + '@svlt',
+				passphrase: $('#register-passphrase').val(),
+			};
+			openpgp.generateKeyPair(options).then(function(data) {
+
+				// Hash password and generate symmetric key
+				var pass = $('#register-passphrase').val(),
+					passHash = btoa(openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, pass)),
+					bytes = openpgp.crypto.random.getRandomBytes(256),
+					hash = openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, bytes),
+					symmKey = btoa(hash);
+
+				// Populate hidden inputs
+				$('#finalize-passhash').val(passHash);
+				$('#finalize-keypair-fingerprint').val(data.key.primaryKey.fingerprint);
+				$('#finalize-keypair-private').val(data.privateKeyArmored);
+				$('#finalize-keypair-public').val(data.publicKeyArmored);
+				$('#finalize-symmkey').val(symmKey);
+
+				// Bind content to export button
+				var dlString = JSON.stringify({
+						passhash: passHash,
+						keypair: {
+							fingerprint: data.key.primaryKey.fingerprint,
+							armored_private: data.privateKeyArmored,
+							armored_public: data.publicKeyArmored
+						},
+						symmkey: symmKey
+					}),
+					dlFilename = 'vault-keys.json';
+				if(window.navigator.msSaveOrOpenBlob) {
+					$('#btn-export-keys').click(function() {
+						window.navigator.msSaveOrOpenBlob(new Blob(dlString), dlFilename);
+					});
+				} else {
+					$('#btn-export-keys')
+						.attr('download', dlFilename)
+						.attr('href', 'data:application/json;charset=utf-8,' + encodeURIComponent(dlString));
+				}
+
+				// Show finalization form
+				$('#msg-keygen, #frm-finalize').toggle();
+
+			}).catch(function(err) {
+				$('#frm-keygen').text(err);
+			});
+
+		});
+		$('#register-passphrase').change(function(e) {
+
+			// Check passphrase strength
+			var $this = $(this),
+				passphrase = $this.val(),
+				entropizer = new Entropizer(),
+				entropy = entropizer.evaluate(passphrase);
+
+			if(passphrase && entropy < 80) {
+				$this.parents('.form-group').addClass('has-warning');
+			} else {
+				$this.parents('.form-group').removeClass('has-warning');
+			}
+
+		});
+	</script>
+</body>
+</html>
