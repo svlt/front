@@ -5,4 +5,5 @@ return [
 	"site" => [
 		"name" => "Vault",
 	],
+	"api" => "https://api.vault.im/"
 ];
