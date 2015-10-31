@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include href="parts/head.html" />
+</head>
+<body>
+	<include href="parts/nav-public.html" />
+
+	<div class="jumbotron jumbotron-fluid jumbotron-profile profile-banner" data-username="{{ @this_user->username }}">
+		<div class="container">
+			<img class="profile-pic" src="//gravatar.com/avatar?d=mm" alt>
+			<h3>{{ @this_user->name }}</h3>
+			<p>{{ @this_user->tagline ?: ('<code>' . @this_user->fingerprint . '</code>') }}</p>
+		</div>
+	</div>
+
+	<include href="parts/footer-public.html" />
+</body>
+</html>
