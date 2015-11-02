@@ -1,0 +1,8 @@
+<check if="{{ empty(@user) }}">
+	<true>
+		<include href="parts/nav/public.html" />
+	</true>
+	<false>
+		<include href="parts/nav/user.html" />
+	</false>
+</check>

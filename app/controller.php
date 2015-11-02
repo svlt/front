@@ -7,7 +7,7 @@ abstract class Controller {
 	 * @return int|bool
 	 */
 	protected function _getUser() {
-		return false; // TODO: implement
+		return \App::fw()->get('user') ?: false;
 	}
 
 	/**

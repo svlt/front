@@ -32,6 +32,14 @@ final class App {
 		// Initialize routes
 		require_once 'routes.php';
 
+		// Load user if any
+		if($token = self::$_fw->get('COOKIE.session_token')) {
+			$user = \Helper\Api\User::get('me');
+			if(isset($user->id)) {
+				self::$_fw->set('user', $user);
+			}
+		}
+
 		// Run app
 		self::$_fw->run();
 

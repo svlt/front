@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include href="parts/head.html" />
+</head>
+<body>
+	<include href="parts/nav.html" />
+
+	<div class="container">
+		<div class="row">
+			<div class="col-sm-3 hidden-md-down col-user">
+				<div class="card card-profile">
+					<div class="card-img-top card-profile-banner" data-username="{{ @user->username }}"></div>
+					<a class="card-profile-pic" href="{{ @BASE }}">
+						<img class="card-profile-img" src="//gravatar.com/avatar?d=mm">
+					</a>
+					<div class="card-block text-center">
+						<h4 class="card-title">{{ @user->name }}</h4>
+						<check if="{{ @user->tagline }}">
+							<true>
+								<p>{{ @user->tagline }}</p>
+							</true>
+							<false>
+								<p><a href="{{ @BASE }}/settings#tagline" class="text-muted">
+									<span class="icon icon-edit"></span>&ensp;Add a Tagline
+								</a></p>
+							</false>
+						</check>
+					</div>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-8 col-stream">
+				<main class="card card-stream">
+					<div class="card-block">
+						<form>
+							<fieldset class="form-group">
+								<label class="sr-only" for="message">Write a post&hellip;</label>
+								<div class="input-group">
+									<input class="form-control" type="text" id="message" name="message" placeholder="Write a post&hellip;">
+									<span class="input-group-btn">
+										<button class="btn btn-secondary" type="button">
+											<i class="icon icon-camera"></i>
+										</button>
+									</span>
+								</div>
+							</fieldset>
+						</form>
+					</div>
+				</main>
+			</div>
+			<div class="col-lg-3 col-md-4 col-side">
+				<include href="parts/footer-card.html" />
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>

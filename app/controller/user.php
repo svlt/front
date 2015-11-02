@@ -19,4 +19,30 @@ class User extends \Controller {
 		}
 	}
 
+	/**
+	 * GET /stream
+	 * @param Base $fw
+	 */
+	function stream($fw) {
+		$this->_requireLogin();
+
+		// TODO: load stream data
+
+		$this->_render('user/stream.html');
+	}
+
+	/**
+	 * GET|POST /logout
+	 * @param Base $fw
+	 */
+	function logout($fw) {
+		if($fw->get('COOKIE.session_token') == $fw->get('GET.session')) {
+			\Helper\Api\User::logout();
+			$fw->set('COOKIE.session_token', null);
+			$fw->reroute('/');
+		} else {
+			$fw->error(400);
+		}
+	}
+
 }

@@ -4,7 +4,7 @@
 	<include href="parts/head.html" />
 </head>
 <body>
-	<include href="parts/nav-public.html" />
+	<include href="parts/nav.html" />
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
@@ -36,7 +36,10 @@
 				</div>
 
 				<form id="frm-finalize" style="display: none;" action="{{ @BASE }}/register" method="post">
-					<input type="hidden" id="finalize-passhash" name="passhash">
+					<input type="hidden" id="finalize-username" name="username">
+					<input type="hidden" id="finalize-name" name="name">
+					<input type="hidden" id="finalize-passsalt" name="password-salt">
+					<input type="hidden" id="finalize-passhash" name="password-hash">
 					<input type="hidden" id="finalize-keypair-fingerprint" name="keypair-fingerprint">
 					<input type="hidden" id="finalize-keypair-private" name="keypair-private">
 					<input type="hidden" id="finalize-keypair-public" name="keypair-public">
@@ -80,12 +83,16 @@
 
 				// Hash password and generate symmetric key
 				var pass = $('#register-passphrase').val(),
-					passHash = btoa(openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, pass)),
+					salt = btoa(openpgp.crypto.random.getRandomBytes(64)).substr(0,64),
+					passHash = bin2hex(openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, salt + pass)),
 					bytes = openpgp.crypto.random.getRandomBytes(256),
 					hash = openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, bytes),
 					symmKey = btoa(hash);
 
 				// Populate hidden inputs
+				$('#finalize-username').val($('#register-username').val());
+				$('#finalize-name').val($('#register-name').val());
+				$('#finalize-passsalt').val(salt);
 				$('#finalize-passhash').val(passHash);
 				$('#finalize-keypair-fingerprint').val(data.key.primaryKey.fingerprint);
 				$('#finalize-keypair-private').val(data.privateKeyArmored);

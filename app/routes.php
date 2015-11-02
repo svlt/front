@@ -10,7 +10,9 @@ $fw->route('GET /auth', 'Controller\\Index->auth');
 $fw->route('POST /auth', 'Controller\\Index->authPost');
 
 // Users
+$fw->route('GET /stream', 'Controller\\User->stream');
 $fw->route('GET /u/@username', 'Controller\\User->base');
+$fw->route('GET|POST /logout', 'Controller\\User->logout');
 
 // Posts
 $fw->route('GET /post', 'Controller\\Post->post');

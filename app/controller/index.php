@@ -17,7 +17,14 @@ class Index extends \Controller {
 	}
 
 	function registerPost($fw) {
-		// TODO: Verify registration data, setup session, redirect to stream
+		try {
+			$token = \Helper\Api\User::register($fw->get('POST'));
+			$fw->set('COOKIE.session_token', $token);
+			$fw->reroute('/stream');
+		} catch(\Exception $e) {
+			$fw->set('error', $e->getMessage());
+			\App::error(403);
+		}
 	}
 
 	function auth($fw) {
@@ -25,7 +32,14 @@ class Index extends \Controller {
 	}
 
 	function authPost($fw) {
-		// TODO: Verify login data, setup session, redirect to stream
+		try {
+			$token = \Helper\Api\User::auth($fw->get('POST'));
+			$fw->set('COOKIE.session_token', $token);
+			$fw->reroute('/stream');
+		} catch(\Exception $e) {
+			$fw->set('error', $e->getMessage());
+			$this->_render('index/auth.html');
+		}
 	}
 
 }

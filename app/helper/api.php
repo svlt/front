@@ -29,12 +29,19 @@ class Api {
 
 		// Build curl request
 		$url = self::baseUrl() . ltrim($path, '/');
+		$token = \App::fw()->get('COOKIE.session_token');
 		if(strtoupper($method) == 'GET') {
+			if($token) {
+				$data['_token'] = $token;
+			}
 			if($data !== null) {
 				$url .= '?' . http_build_query($data);
 			}
 			$curl = curl_init($url);
 		} else {
+			if($token) {
+				$url .= '?_token=' . urlencode($token);
+			}
 			$curl = curl_init($url);
 			curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 		}

@@ -22,4 +22,38 @@ class User extends \Helper\Api {
 		return self::call('u/' . $username . '/key.json');
 	}
 
+	/**
+	 * Register a user
+	 * @param  array $data
+	 * @return string Session token
+	 */
+	static function register($data) {
+		$response = self::call('register.json', 'POST', $data);
+		if(!empty($response->token)) {
+			return $response->token;
+		}
+		throw new \Exception($response->error);
+	}
+
+	/**
+	 * Log in a user with a username and hashed password
+	 * @param  array $data
+	 * @return string Session token
+	 */
+	static function auth($data) {
+		$response = self::call('auth.json', 'POST', ['action' => 'auth'] + $data);
+		if(!empty($response->token)) {
+			return $response->token;
+		}
+		throw new \Exception($response->error);
+	}
+
+	/**
+	 * Log out the current user
+	 * @return object
+	 */
+	static function logout() {
+		return self::call('logout.json', 'POST');
+	}
+
 }
