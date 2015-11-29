@@ -12,6 +12,26 @@ class Index extends \Controller {
 		$this->_render('index/index.html');
 	}
 
+	function manifest($fw) {
+		header('Content-type: application/json');
+		echo json_encode([
+			'lang' => 'en',
+			'name' => $fw->get('site.name'),
+			'icons' => [
+				[
+					'src' => 'https://vault.im/~alan/logo/svlt.min.svg',
+					'sizes' => '512x512',
+					'type' => 'image/svg+xml',
+				]
+			],
+			'start_url' => $fw->get('BASE') . '/',
+			'scope' => $fw->get('BASE') . '/',
+			'display' => 'minimal-ui',
+			'background_color' => '#f5f8fa',
+			'theme_color' => '#0087cb',
+		]);
+	}
+
 	function register($fw) {
 		$this->_render('index/register.html');
 	}
