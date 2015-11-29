@@ -74,40 +74,27 @@
 			$('#frm-register, #msg-keygen').toggle();
 
 			// Generate key
-			var options = {
-				numBits: 2048,
-				userId: $('#register-username').val() + '@svlt',
-				passphrase: $('#register-passphrase').val(),
-			};
-			openpgp.generateKeyPair(options).then(function(data) {
-
-				// Hash password and generate symmetric key
-				var pass = $('#register-passphrase').val(),
-					salt = btoa(openpgp.crypto.random.getRandomBytes(64)).substr(0,64),
-					passHash = bin2hex(openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, salt + pass)),
-					bytes = openpgp.crypto.random.getRandomBytes(256),
-					hash = openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, bytes),
-					symmKey = btoa(hash);
+			App.Session.registerKeygen($('#register-username').val(), $('#register-passphrase').val(), function(data, salt, pass, symm) {
 
 				// Populate hidden inputs
 				$('#finalize-username').val($('#register-username').val());
 				$('#finalize-name').val($('#register-name').val());
 				$('#finalize-passsalt').val(salt);
-				$('#finalize-passhash').val(passHash);
+				$('#finalize-passhash').val(pass);
 				$('#finalize-keypair-fingerprint').val(data.key.primaryKey.fingerprint);
 				$('#finalize-keypair-private').val(data.privateKeyArmored);
 				$('#finalize-keypair-public').val(data.publicKeyArmored);
-				$('#finalize-symmkey').val(symmKey);
+				$('#finalize-symmkey').val(symm);
 
 				// Bind content to export button
 				var dlString = JSON.stringify({
-						passhash: passHash,
+						passhash: pass,
 						keypair: {
 							fingerprint: data.key.primaryKey.fingerprint,
 							armored_private: data.privateKeyArmored,
 							armored_public: data.publicKeyArmored
 						},
-						symmkey: symmKey
+						symmkey: symm
 					}),
 					dlFilename = 'vault-keys.json';
 				if(window.navigator.msSaveOrOpenBlob) {
@@ -123,8 +110,6 @@
 				// Show finalization form
 				$('#msg-keygen, #frm-finalize').toggle();
 
-			}).catch(function(err) {
-				$('#frm-keygen').text(err);
 			});
 
 		});

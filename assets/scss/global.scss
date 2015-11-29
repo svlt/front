@@ -1,4 +1,4 @@
-/*! Social Vault | MIT License | github.com/svlt */
+/*! Vault | MIT License | github.com/svlt */
 html, body {
 	height: 100%;
 }
@@ -39,12 +39,12 @@ body {
 }
 
 // Profile card
+.card-profile {
+	margin-top: $profile-img-size-card / 2;
+}
 .card-profile-banner {
 	background-color: $gray;
 	min-height: $profile-card-cover-size;
-}
-.card-profile .card-title {
-	font-size: $font-size-lg;
 }
 .card-profile-pic {
 	@include center-block;
@@ -54,7 +54,11 @@ body {
 	margin-top: -$profile-img-size-card / 2;
 	width: $profile-img-size-card;
 	height: $profile-img-size-card;
-	border-radius: 100%;
+	border: $border-width solid $card-border-color;
+	border-radius: 50%;
+}
+.card-profile .card-title {
+	font-size: $font-size-lg;
 }
 
 // About card
@@ -162,5 +166,5 @@ body {
 }
 .card-copyright .nav-link:not(:first-child),
 .row-copyright .nav-link {
-	padding-left: $spacer;
+	padding-left: $spacer / 2;
 }

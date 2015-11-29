@@ -1,0 +1,20 @@
+<div class="card card-profile">
+	<a class="card-profile-pic" href="{{ @BASE }}/u/{{ @cardUser->username }}">
+		<img class="card-profile-img" src="//gravatar.com/avatar?d=mm">
+	</a>
+	<div class="card-block text-center">
+		<h4 class="card-title">{{ @cardUser->name }}</h4>
+		<check if="{{ @cardUser->tagline }}">
+			<true>
+				<p>{{ @cardUser->tagline }}</p>
+			</true>
+			<false>
+				<check if="{{ @user->id == @cardUser->id }}">
+					<p><a href="{{ @BASE }}/settings#tagline" class="text-muted">
+						<span class="icon icon-edit"></span>&ensp;Add a Tagline
+					</a></p>
+				</check>
+			</false>
+		</check>
+	</div>
+</div>

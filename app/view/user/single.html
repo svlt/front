@@ -10,7 +10,9 @@
 		<div class="container">
 			<img class="profile-pic" src="//gravatar.com/avatar?d=mm" alt>
 			<h3>{{ @this_user->name }}</h3>
-			<p>{{ @this_user->tagline ?: ('<code>' . @this_user->fingerprint . '</code>') }}</p>
+			<check if="{{ @this_user->tagline }}">
+				<p>{{ @this_user->tagline }}</p>
+			</check>
 		</div>
 	</div>
 

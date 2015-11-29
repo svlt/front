@@ -33,16 +33,10 @@
 		});
 		$('.login-form').submit(function(e) {
 			if(!$('#password_hash').val()) {
-				$.post(API + 'auth.json', {
-					action: 'salt',
-					username: $('#username').val()
-				}, function(data) {
-					var hash = bin2hex(openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, data.salt + $('#password').val()));
-					console.log(data.salt, hash);
+				App.Session.login($('#username').val(), $('#password').val(), function(hash) {
 					$('#password_hash').val(hash);
-					console.log($('.login-form').serialize());
 					$('.login-form').prop('disabled', false).submit();
-				}, 'json');
+				});
 				$(this).prop('disabled', true);
 				e.preventDefault();
 			}
