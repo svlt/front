@@ -74,7 +74,7 @@
 			$('#frm-register, #msg-keygen').toggle();
 
 			// Generate key
-			App.Session.registerKeygen($('#register-username').val(), $('#register-passphrase').val(), function(data, salt, pass, symm) {
+			App.session.registerKeygen($('#register-username').val(), $('#register-passphrase').val(), function(data, salt, pass, symm) {
 
 				// Populate hidden inputs
 				$('#finalize-username').val($('#register-username').val());

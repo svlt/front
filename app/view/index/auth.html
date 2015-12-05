@@ -33,7 +33,7 @@
 		});
 		$('.login-form').submit(function(e) {
 			if(!$('#password_hash').val()) {
-				App.Session.login($('#username').val(), $('#password').val(), function(hash) {
+				App.session.login($('#username').val(), $('#password').val(), function(hash) {
 					$('#password_hash').val(hash);
 					$('.login-form').prop('disabled', false).submit();
 				});

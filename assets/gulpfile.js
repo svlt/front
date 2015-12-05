@@ -27,7 +27,6 @@ gulp.task('vendor_js', function() {
 		'bower_components/jquery/dist/jquery.min.js',
 		'bower_components/tether/dist/js/tether.min.js',
 		'bower_components/bootstrap/dist/js/bootstrap.min.js',
-		'bower_components/geopattern/js/geopattern.min.js',
 		'bower_components/openpgp/dist/openpgp.min.js',
 		'bower_components/sjcl/sjcl.js',
 		'bower_components/entropizer/dist/entropizer.min.js',
@@ -40,8 +39,6 @@ gulp.task('vendor_js', function() {
 gulp.task('app_js', function() {
 	gulp.src('js/src/**.js')
 		.pipe(concat('app.min.js', {newLine: '\n'}))
-		// .pipe(gulp.dest('js'))
-		// .pipe(rename({suffix: '.min'}))
 		.pipe(uglify().on('error', notify.onError(function(error) {
 				return 'Error compiling JS: ' + error.message;
 			})))

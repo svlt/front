@@ -17,7 +17,7 @@ composer install
 cp config-sample.php config.php
 cd assets/
 bower install
-gulp scss js
+gulp scss app_js vendor_js
 ```
 
 Further setup information (connecting to `svlt/back`, setting up URL rewrites, etc.) soon!
