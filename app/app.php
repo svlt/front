@@ -20,6 +20,7 @@ final class App {
 			'PREFIX' => 'dict.',
 			'PACKAGE' => 'svlt/front',
 			'UI' => 'app/view/',
+			'JAR.httponly' => false,
 		]);
 
 		// Load configuration

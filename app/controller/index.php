@@ -12,6 +12,10 @@ class Index extends \Controller {
 		$this->_render('index/index.html');
 	}
 
+	function style($fw) {
+		$this->_render('index/style.html');
+	}
+
 	function manifest($fw) {
 		header('Content-type: application/json');
 		echo json_encode([

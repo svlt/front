@@ -7,10 +7,14 @@ $font-family-sans-serif:    'Lato', Helvetica, Arial, sans-serif;
 $input-border-focus:        lighten($brand-primary, 10%);
 $input-box-shadow-focus:    transparent;
 
+$border-radius-lg:          .3125rem;
+$border-radius-sm:          .25rem;
+
+// Bootstrap styles are overridden locally
 $enable-flex:               true;
+$enable-shadows:            false;
 $enable-rounded:            true;
-$enable-shadows:            true;
-$enable-gradients:          true;
+$enable-gradients:          false;
 $enable-transitions:        false;
 $enable-hover-media-query:  false;
 
@@ -30,10 +34,19 @@ $profile-card-cover-size:   9rem;
 @import "../bower_components/bootstrap/scss/bootstrap";
 @import "https://fonts.googleapis.com/css?family=Lato:400,700";
 
+// Temporary fix because they broke the pull-* classes :P
+.pull-left {
+	@include pull-left();
+}
+.pull-right {
+	@include pull-right();
+}
+
 // Fonts
 @import "font-icomoon";
 
 // Site styles
+@import "theme";
 @import "global";
 @import "navbar";
 @import "photo-list";

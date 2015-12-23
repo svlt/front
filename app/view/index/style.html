@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<include href="parts/head.html" />
+	<style type="text/css">
+	hr {
+		margin-top: 2em;
+		margin-bottom: 2em;
+	}
+	.color-box > div {
+		display: inline-block;
+		width: 128px;
+		height: 128px;
+		text-align: center;
+		border-radius: .3125rem;
+		margin-right: 1rem;
+	}
+	.color-box .color-text {
+		line-height: 128px;
+		font-size: 18px;
+	}
+	.logos {
+		font-size: 128px;
+		line-height: 1;
+	}
+
+	.font .col-sm-4 > :last-child,
+	.font .col-sm-8 > :last-child {
+		margin-bottom: 0;
+	}
+	</style>
+</head>
+<body>
+	<include href="parts/nav.html" />
+	<div class="jumbotron jumbotron-fluid jumbotron-fluid-top">
+		<div class="container">
+			<h2>{{ @site.name }} Style Guide</h2>
+		</div>
+	</div>
+	<div class="container">
+		<h2>Colors</h2>
+		<p>Vault uses a consistent blue color for branding and primary elements like confirmation buttons and the navbar. Other UI elements use colors from Bootstrap</p>
+		<div class="color-box">
+			<div class="bg-primary">
+				<span class="color-text"></span>
+			</div>
+			<div class="bg-success">
+				<span class="color-text"></span>
+			</div>
+			<div class="bg-danger">
+				<span class="color-text"></span>
+			</div>
+			<div class="bg-warning">
+				<span class="color-text"></span>
+			</div>
+		</div>
+
+		<hr>
+
+		<h2>Logo</h2>
+		<p>Vault is currently using a simple "vault door" glyph. The logo should generally be displayed in <code class="text-primary brand-color-text">SV blue</code>, but can be white, black, or gray to match its surroundings. For example the site navbar is the primary color, and the logo is rendered in white on it.</p>
+		<div class="logos">
+			<i class="icon icon-svlt text-primary"></i>
+			<i class="icon icon-svlt"></i>
+		</div>
+		<div class="btn-group">
+			<a class="btn btn-secondary" href="https://vault.im/~alan/logo/svlt.min.svg"><span class="hidden-xs-down">Download</span> SVG</a>
+			<a class="btn btn-secondary" href="https://vault.im/~alan/logo/svlt.png">PNG</a>
+			<a class="btn btn-secondary" href="https://vault.im/~alan/logo/svlt-blue.png">PNG (Blue)</a>
+		</div>
+
+		<hr>
+
+		<h2>Font</h2>
+		<p>The Lato font is used for headings, content, and UI elements. Headings are rendered at <code>500</code> weight, body and UI text at <code>400</code>.</p>
+		<div class="card font">
+			<div class="card-block">
+				<div class="row">
+					<div class="col-sm-4">
+						<h1>Heading 1</h1>
+						<h2>Heading 2</h2>
+						<h3>Heading 3</h3>
+						<h4>Heading 4</h4>
+					</div>
+					<div class="col-sm-8">
+						<p class="lead">Lead text block. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.</p>
+						<p>Paragraph text block. Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<include href="parts/footer-public.html" />
+	<script>
+		function rgb2hex(rgb) {
+			rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+			function hex(x) {
+				return ("0" + parseInt(x).toString(16)).slice(-2);
+			}
+			return "#" + hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+		}
+
+		var style = getComputedStyle(document.querySelector('.bg-primary')),
+			brandColor = rgb2hex(style.getPropertyValue('background-color')),
+			brandColorText = document.querySelectorAll('.brand-color-text');
+
+		console.log([brandColor, brandColorText]);
+		for (var i = 0, max = brandColorText.length; i < max; i++) {
+			brandColorText[i].textContent = brandColor;
+		}
+	</script>
+</body>
+</html>

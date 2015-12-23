@@ -30,6 +30,7 @@ gulp.task('vendor_js', function() {
 		'bower_components/openpgp/dist/openpgp.min.js',
 		'bower_components/sjcl/sjcl.js',
 		'bower_components/entropizer/dist/entropizer.min.js',
+		'bower_components/js-cookie/src/js.cookie.js',
 	];
 	gulp.src(scripts)
 		.pipe(concat('vendor.min.js', {newLine: '\n'}))

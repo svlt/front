@@ -4,6 +4,7 @@ $fw = App::fw();
 
 // Index (public pages)
 $fw->route('GET /', 'Controller\\Index->index');
+$fw->route('GET /style', 'Controller\\Index->style');
 $fw->route('GET /manifest.json', 'Controller\\Index->manifest');
 $fw->route('GET /register', 'Controller\\Index->register');
 $fw->route('POST /register', 'Controller\\Index->registerPost');
