@@ -20,6 +20,13 @@ var App = {
 		// Initialize inline tooltips and popovers
 		$('[data-toggle="tooltip"]').tooltip();
 		$('[data-toggle="popover"]').popover();
+
+		// Use localStorage instead of sessionStorage if persistent flag is set
+		if(localStorage.getItem('persistent')) {
+			App.store = localStorage;
+		} else {
+			App.store = sessionStorage;
+		}
 	},
 	crypto: {
 		randBytes: function(bytes) {
@@ -112,20 +119,31 @@ var App = {
 				$.get(API + 'keystore.json', {
 					_token: Cookies.get('session_token')
 				}, function(data) {
-					var keystore = {};
-
 					// Decrypt private key
-					keystore.privateKey = openpgp.key.readArmored(keystore.private).keys[0].decrypt(passphrase);
-					keystore.publicKey = data.publicKey;
+					var privateKey = openpgp.key.readArmored(keystore.private).keys[0].decrypt(passphrase),
+						publicKey = data.publicKey;
 
-					// Decrypt symmetric keys
-					$.each(keystore.symmetric, function(i, k) {
-						keystore.symmetric[i] = App.crypto.pgp.decrypt();
+					// Write own keys to sessionStorage
+					App.store.setItem('keystore.privateKey', privateKey);
+					App.store.setItem('keystore.publicKey', publicKey);
+
+					// Decrypt and store symmetric keys
+					$.each(data.symmetric, function(i, k) {
+						console.log(k);
+						App.crypto.pgp.decrypt(k, keystore.privateKey, function(key) {
+							App.store.set('keystore.symmetric.' + i, key);
+						});
 					});
-
-					// Write keystore to sessionStorage
-					sessionStorage.setItem('keystore', keystore);
 				}, 'json');
+			},
+			getPublicKey: function() {
+				App.store.getItem('keystore.publicKey');
+			},
+			getPrivateKey: function() {
+				App.store.getItem('keystore.publicKey');
+			},
+			getSymmetricKey: function(userId) {
+				App.store.getItem('keystore.symmetric.' + userId);
 			}
 		}
 	}
