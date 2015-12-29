@@ -34,14 +34,6 @@ $profile-card-cover-size:   9rem;
 @import "../bower_components/bootstrap/scss/bootstrap";
 @import "https://fonts.googleapis.com/css?family=Lato:400,700";
 
-// Temporary fix because they broke the pull-* classes :P
-.pull-left {
-	@include pull-left();
-}
-.pull-right {
-	@include pull-right();
-}
-
 // Fonts
 @import "font-icomoon";
 
