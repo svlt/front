@@ -59,7 +59,7 @@ final class App {
 	 * @param int $code
 	 */
 	static function error($code = null) {
-		return self::$_router->error($code);
+		return self::$_fw->error($code);
 	}
 
 }
