@@ -8,6 +8,9 @@
 	<div class="container">
 		<h1>Error</h1>
 		<p>{{ @ERROR.text | esc }}</p>
+		<check if="{{ @DEBUG >= 2 && @@error }}">
+			<pre>{{ @error }}</pre>
+		</check>
 	</div>
 	<include href="parts/footer-public.html" />
 </body>
