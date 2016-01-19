@@ -6,13 +6,10 @@
 <body>
 	<div class="login-form-container">
 		<form class="login-form" action="{{ @BASE }}/auth" method="post">
-			<input type="hidden" id="password_hash" name="password_hash">
 			<h1 class="text-primary">
 				<i class="icon icon-svlt"></i>
 			</h1>
-			<check if="{{ @@error }}">
-				<p class="alert alert-danger">{{ @error }}</p>
-			</check>
+			<p class="alert alert-danger login-error" style="display: none;"></p>
 			<fieldset class="form-group">
 				<label class="sr-only" for="username">Username</label>
 				<input type="text" class="form-control" id="username" name="username" placeholder="Username">
@@ -32,14 +29,25 @@
 			$('#password_hash').val(null);
 		});
 		$('.login-form').submit(function(e) {
-			if(!$('#password_hash').val()) {
-				App.session.login($('#username').val(), $('#password').val(), function(hash) {
-					$('#password_hash').val(hash);
-					$('.login-form').prop('disabled', false).submit();
-				});
-				$(this).prop('disabled', true);
-				e.preventDefault();
-			}
+			e.preventDefault();
+
+			var username = $('#username').val(),
+				passphrase = $('#password').val(),
+				$form = $(this);
+			$form.find('input').prop('disabled', true);
+
+			App.session.login(username, passphrase, function() {
+				// Success
+				window.location = '{{ @BASE }}/';
+			}, function() {
+				// Auth Fail
+				$('.login-error').text('Invalid username or passphrase.').show();
+				$form.find('input').prop('disabled', false);
+			}).fail(function() {
+				// AJAX Fail
+				$('.login-error').text('Login failed for an unknown reason. Please try again.').show();
+				$form.find('input').prop('disabled', false);
+			});
 		});
 	</script>
 </body>

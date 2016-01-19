@@ -55,15 +55,4 @@ class Index extends \Controller {
 		$this->_render('index/auth.html');
 	}
 
-	function authPost($fw) {
-		try {
-			$token = \Helper\Api\User::auth($fw->get('POST'));
-			$fw->set('COOKIE.session_token', $token);
-			$fw->reroute('/stream');
-		} catch(\Exception $e) {
-			$fw->set('error', $e->getMessage());
-			$this->_render('index/auth.html');
-		}
-	}
-
 }

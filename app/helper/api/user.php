@@ -36,19 +36,6 @@ class User extends \Helper\Api {
 	}
 
 	/**
-	 * Log in a user with a username and hashed password
-	 * @param  array $data
-	 * @return string Session token
-	 */
-	static function auth($data) {
-		$response = self::call('auth.json', 'POST', ['action' => 'auth'] + $data);
-		if(!empty($response->token)) {
-			return $response->token;
-		}
-		throw new \Exception($response->error);
-	}
-
-	/**
 	 * Log out the current user
 	 * @return object
 	 */
