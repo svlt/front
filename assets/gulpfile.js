@@ -1,11 +1,18 @@
 var gulp = require('gulp'),
+	// Common
+	notify = require('gulp-notify'),
+	// SCSS
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	minifycss = require('gulp-minify-css'),
+	// App JS
+	babel = require('gulp-babel'),
+	browserify = require('gulp-browserify'),
+	uglify = require('gulp-uglify'),
+	// JS Common
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat'),
-	uglify = require('gulp-uglify'),
-	notify = require('gulp-notify');
+	strip = require('gulp-strip-comments');
 
 gulp.task('scss', function() {
 	gulp.src('scss/style.scss')
@@ -24,6 +31,8 @@ gulp.task('scss', function() {
 
 gulp.task('vendor_js', function() {
 	var scripts = [
+		'bower_components/react/react.min.js',
+		'bower_components/react/react-dom.min.js',
 		'bower_components/jquery/dist/jquery.min.js',
 		'bower_components/tether/dist/js/tether.min.js',
 		'bower_components/bootstrap/dist/js/bootstrap.min.js',
@@ -34,15 +43,20 @@ gulp.task('vendor_js', function() {
 	];
 	gulp.src(scripts)
 		.pipe(concat('vendor.min.js', {newLine: '\n'}))
+		.pipe(strip())
 		.pipe(gulp.dest('js'));
 });
 
 gulp.task('app_js', function() {
-	gulp.src('js/src/**.js')
-		.pipe(concat('app.min.js', {newLine: '\n'}))
-		.pipe(uglify().on('error', notify.onError(function(error) {
-				return 'Error compiling JS: ' + error.message;
-			})))
+	gulp.src('js/src/app.js')
+		.pipe(babel({
+			presets: ['es2015']
+		}).on('error', notify.onError(function(error) {
+			return 'Error compiling JS: ' + error.message;
+		})))
+		.pipe(browserify())
+		.pipe(uglify())
+		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('js'))
 		.pipe(notify({
 			message: 'App JS compiled!'
