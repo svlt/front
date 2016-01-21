@@ -24,7 +24,7 @@ module.exports = {
 		return openpgp.crypto.hash.digest(openpgp.enums.hash.sha512, str);
 	},
 
-	pgp: require('./app_crypto_pgp.js'),
-	symmetric: require('./app_crypto_symmetric.js')
+	pgp: require('./_crypto_pgp.js'),
+	symmetric: require('./_crypto_symmetric.js')
 
 };

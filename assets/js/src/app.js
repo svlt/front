@@ -4,9 +4,10 @@
  * @type {Object}
  */
 window.App = {
-	init: require('./app_init.js'),
-	crypto: require('./app_crypto.js'),
-	session: require('./app_session.js')
+	init: require('./_init.js'),
+	crypto: require('./_crypto.js'),
+	session: require('./_session.js'),
+	components: require('./_components.js')
 };
 
 // Initialize app

@@ -12,7 +12,9 @@ var gulp = require('gulp'),
 	// JS Common
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat'),
-	strip = require('gulp-strip-comments');
+	strip = require('gulp-strip-comments'),
+	// Build variables
+	devBuild = true; //process.argv.indexOf('dev') >= 0;
 
 gulp.task('scss', function() {
 	gulp.src('scss/style.scss')
@@ -30,31 +32,57 @@ gulp.task('scss', function() {
 });
 
 gulp.task('vendor_js', function() {
-	var scripts = [
-		'bower_components/react/react.min.js',
-		'bower_components/react/react-dom.min.js',
-		'bower_components/jquery/dist/jquery.min.js',
-		'bower_components/tether/dist/js/tether.min.js',
-		'bower_components/bootstrap/dist/js/bootstrap.min.js',
-		'bower_components/openpgp/dist/openpgp.min.js',
-		'bower_components/sjcl/sjcl.js',
-		'bower_components/entropizer/dist/entropizer.min.js',
-		'bower_components/js-cookie/src/js.cookie.js',
-	];
-	gulp.src(scripts)
-		.pipe(concat('vendor.min.js', {newLine: '\n'}))
-		.pipe(strip())
-		.pipe(gulp.dest('js'));
+	var scripts;
+	if(!devBuild)
+		// Minified production libraries
+		scripts = [
+			'bower_components/react/react.min.js',
+			'bower_components/react/react-dom.min.js',
+			'bower_components/jquery/dist/jquery.min.js',
+			'bower_components/tether/dist/js/tether.min.js',
+			'bower_components/bootstrap/dist/js/bootstrap.min.js',
+			'bower_components/openpgp/dist/openpgp.min.js',
+			'bower_components/sjcl/sjcl.js',
+			'bower_components/entropizer/dist/entropizer.min.js',
+			'bower_components/js-cookie/src/js.cookie.js',
+		];
+	else
+		// Full development libraries
+		scripts = [
+			'bower_components/react/react.js',
+			'bower_components/react/react-dom.js',
+			'bower_components/jquery/dist/jquery.js',
+			'bower_components/tether/dist/js/tether.js',
+			'bower_components/bootstrap/dist/js/bootstrap.js',
+			'bower_components/openpgp/dist/openpgp.js',
+			'bower_components/sjcl/sjcl.js',
+			'bower_components/entropizer/dist/entropizer.js',
+			'bower_components/js-cookie/src/js.cookie.js',
+		];
+
+	var stream = gulp.src(scripts)
+		.pipe(concat('vendor.min.js', {newLine: '\n'}));
+
+	if(!devBuild)
+		stream.pipe(strip());
+
+	stream.pipe(gulp.dest('js'));
 });
 
 gulp.task('app_js', function() {
 	gulp.src('js/src/app.js')
-		.pipe(babel({
-			presets: ['es2015']
-		}).on('error', notify.onError(function(error) {
-			return 'Error compiling JS: ' + error.message;
-		})))
-		.pipe(browserify())
+		.pipe(
+			babel({
+				presets: ['es2015']
+			}).on('error', notify.onError(function(error) {
+				return 'Error compiling JS: ' + error.message;
+			}))
+		)
+		.pipe(
+			browserify().on('error', notify.onError(function(error) {
+				return 'Error compiling JS: ' + error.message;
+			}))
+		)
 		.pipe(uglify())
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('js'))
@@ -63,7 +91,9 @@ gulp.task('app_js', function() {
 		}));
 });
 
-gulp.task('default', ['scss', 'vendor_js', 'app_js', 'watch']);
+gulp.task('default', ['scss', 'vendor_js', 'app_js']);
+
+gulp.task('dev', ['scss', 'vendor_js', 'app_js', 'watch']);
 
 gulp.task('watch', function() {
 	gulp.watch('scss/*.scss', ['scss']);
