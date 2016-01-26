@@ -1,20 +1,23 @@
 var gulp = require('gulp'),
 	// Common
 	notify = require('gulp-notify'),
+
 	// SCSS
 	sass = require('gulp-sass'),
 	autoprefixer = require('gulp-autoprefixer'),
 	minifycss = require('gulp-minify-css'),
+
 	// App JS
-	babel = require('gulp-babel'),
 	browserify = require('gulp-browserify'),
 	uglify = require('gulp-uglify'),
+
 	// JS Common
 	rename = require('gulp-rename'),
 	concat = require('gulp-concat'),
 	strip = require('gulp-strip-comments'),
+
 	// Build variables
-	devBuild = true; //process.argv.indexOf('dev') >= 0;
+	devBuild = process.argv.indexOf('dev') >= 0;
 
 gulp.task('scss', function() {
 	gulp.src('scss/style.scss')
@@ -72,15 +75,8 @@ gulp.task('vendor_js', function() {
 gulp.task('app_js', function() {
 	gulp.src('js/src/app.js')
 		.pipe(
-			babel({
-				presets: ['es2015']
-			}).on('error', notify.onError(function(error) {
-				return 'Error compiling JS: ' + error.message;
-			}))
-		)
-		.pipe(
 			browserify().on('error', notify.onError(function(error) {
-				return 'Error compiling JS: ' + error.message;
+				return 'Browserify JS error: ' + error.message;
 			}))
 		)
 		.pipe(uglify())

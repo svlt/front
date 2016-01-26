@@ -6,8 +6,7 @@
 window.App = {
 	init: require('./_init.js'),
 	crypto: require('./_crypto.js'),
-	session: require('./_session.js'),
-	components: require('./_components.js')
+	session: require('./_session.js')
 };
 
 // Initialize app
