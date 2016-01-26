@@ -15,7 +15,7 @@
 			<div class="col-lg-6 col-md-8 col-stream">
 				<main class="card card-stream">
 					<div class="card-block">
-						<form>
+						<form class="frm-post" data-user-id="{{ @user->id }}">
 							<fieldset class="form-group">
 								<label class="sr-only" for="message">Write a post&hellip;</label>
 								<div class="input-group">
@@ -37,5 +37,15 @@
 		</div>
 	</div>
 
+<script>
+$(function() {
+	$('.frm-post').submit(function(e) {
+		e.preventDefault();
+		App.post.post($('#message').val(), $(this).data('user-id'), function(data) {
+			console.log(data);
+		});
+	});
+});
+</script>
 </body>
 </html>
