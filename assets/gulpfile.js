@@ -48,6 +48,7 @@ gulp.task('vendor_js', function() {
 			'bower_components/sjcl/sjcl.js',
 			'bower_components/entropizer/dist/entropizer.min.js',
 			'bower_components/js-cookie/src/js.cookie.js',
+			'bower_components/zxcvbn/dist/zxcvbn.js',
 		];
 	else
 		// Full development libraries
@@ -61,6 +62,7 @@ gulp.task('vendor_js', function() {
 			'bower_components/sjcl/sjcl.js',
 			'bower_components/entropizer/dist/entropizer.js',
 			'bower_components/js-cookie/src/js.cookie.js',
+			'bower_components/zxcvbn/dist/zxcvbn.js',
 		];
 
 	var stream = gulp.src(scripts)
