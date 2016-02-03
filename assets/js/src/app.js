@@ -9,8 +9,3 @@ window.App = {
 	session: require('./_session.js'),
 	post: require('./_post.js')
 };
-
-// Initialize app
-$(function() {
-	App.init();
-});
