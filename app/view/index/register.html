@@ -25,6 +25,9 @@
 						<label for="register-passphrase">Passphrase</label>
 						<input class="form-control" type="password" name="passphrase" id="register-passphrase" required>
 						<small class="text-muted">Choose a strong and unique passphrase to protect your account.</small>
+						<div class="alert alert-danger" id="register-passphrase-suggestions" style="display: none;">
+							<ul class="list-unstyled"></ul>
+						</div>
 					</fieldset>
 					<div class="text-xs-right">
 						<button type="submit" class="btn btn-secondary btn-sm">Continue <span class="icon icon-chevron-right"></span></button>
@@ -118,13 +121,19 @@
 			// Check passphrase strength
 			var $this = $(this),
 				passphrase = $this.val(),
-				entropizer = new Entropizer(),
-				entropy = entropizer.evaluate(passphrase);
+				result = zxcvbn(passphrase),
+				suggestions = $('#register-passphrase-suggestions');
 
-			if(passphrase && entropy < 80) {
-				$this.parents('.form-group').addClass('has-warning');
+			suggestions.find('ul').empty();
+			if(passphrase && result.score < 3) {
+				$this.parents('.form-group').addClass('has-danger');
+				$.each(result.feedback.suggestions, function() {
+					suggestions.find('ul').append($('<li />').text(this));
+				});
+				suggestions.show();
 			} else {
-				$this.parents('.form-group').removeClass('has-warning');
+				$this.parents('.form-group').removeClass('has-danger');
+				suggestions.hide();
 			}
 
 		});

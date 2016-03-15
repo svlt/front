@@ -6,10 +6,6 @@
 window.App = {
 	init: require('./_init.js'),
 	crypto: require('./_crypto.js'),
-	session: require('./_session.js')
+	session: require('./_session.js'),
+	post: require('./_post.js')
 };
-
-// Initialize app
-$(function() {
-	App.init();
-});

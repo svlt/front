@@ -35,51 +35,45 @@ gulp.task('scss', function() {
 });
 
 gulp.task('vendor_js', function() {
-	var scripts;
-	if(!devBuild)
-		// Minified production libraries
-		scripts = [
-			'bower_components/react/react.min.js',
-			'bower_components/react/react-dom.min.js',
+	gulp.src([
 			'bower_components/jquery/dist/jquery.min.js',
 			'bower_components/tether/dist/js/tether.min.js',
 			'bower_components/bootstrap/dist/js/bootstrap.min.js',
+		])
+		.pipe(concat('vendor.min.js', {newLine: '\n'}))
+		.pipe(gulp.dest('js'));
+});
+
+gulp.task('async_js', function() {
+	var scripts = [
 			'bower_components/openpgp/dist/openpgp.min.js',
 			'bower_components/sjcl/sjcl.js',
-			'bower_components/entropizer/dist/entropizer.min.js',
 			'bower_components/js-cookie/src/js.cookie.js',
-		];
-	else
-		// Full development libraries
-		scripts = [
-			'bower_components/react/react.js',
-			'bower_components/react/react-dom.js',
-			'bower_components/jquery/dist/jquery.js',
-			'bower_components/tether/dist/js/tether.js',
-			'bower_components/bootstrap/dist/js/bootstrap.js',
-			'bower_components/openpgp/dist/openpgp.js',
-			'bower_components/sjcl/sjcl.js',
-			'bower_components/entropizer/dist/entropizer.js',
-			'bower_components/js-cookie/src/js.cookie.js',
+			'bower_components/zxcvbn/dist/zxcvbn.js',
+			'js/src/app_init.js'
 		];
 
-	var stream = gulp.src(scripts)
-		.pipe(concat('vendor.min.js', {newLine: '\n'}));
+	// Add OpenPGP.js web worker to dev builds
+	if(devBuild)
+		scripts.push('js/src/app_init_dev.js');
 
-	if(!devBuild)
-		stream.pipe(strip());
-
-	stream.pipe(gulp.dest('js'));
+	gulp.src(scripts)
+		.pipe(concat('async.min.js', {newLine: '\n'}))
+		.pipe(gulp.dest('js'));
 });
 
 gulp.task('app_js', function() {
-	gulp.src('js/src/app.js')
+	var stream = gulp.src('js/src/app.js')
 		.pipe(
 			browserify().on('error', notify.onError(function(error) {
 				return 'Browserify JS error: ' + error.message;
 			}))
-		)
-		.pipe(uglify())
+		);
+
+	if(!devBuild)
+		stream.pipe(uglify());
+
+	stream
 		.pipe(rename({suffix: '.min'}))
 		.pipe(gulp.dest('js'))
 		.pipe(notify({
@@ -87,9 +81,9 @@ gulp.task('app_js', function() {
 		}));
 });
 
-gulp.task('default', ['scss', 'vendor_js', 'app_js']);
+gulp.task('default', ['scss', 'vendor_js', 'async_js', 'app_js']);
 
-gulp.task('dev', ['scss', 'vendor_js', 'app_js', 'watch']);
+gulp.task('dev', ['scss', 'vendor_js', 'async_js', 'app_js', 'watch']);
 
 gulp.task('watch', function() {
 	gulp.watch('scss/*.scss', ['scss']);
