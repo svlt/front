@@ -2,7 +2,7 @@
 	<a class="card-profile-pic" href="{{ @BASE }}/u/{{ @cardUser->username }}">
 		<img class="card-profile-img" src="//gravatar.com/avatar?d=mm">
 	</a>
-	<div class="card-block text-center">
+	<div class="card-block">
 		<h4 class="card-title">{{ @cardUser->name }}</h4>
 		<check if="{{ @cardUser->tagline }}">
 			<true>

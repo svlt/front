@@ -12,25 +12,40 @@
 				<set cardUser="{{ @user }}" />
 				<include href="components/profile-card.html" />
 			</div>
-			<div class="col-lg-6 col-md-8 col-stream">
-				<main class="card card-stream">
-					<div class="card-block">
+			<dev class="col-lg-6 col-md-8 col-stream">
+				<div class="card card-stream">
+					<main class="card-block">
 						<form class="frm-post" data-user-id="{{ @user->id }}">
 							<fieldset class="form-group">
 								<label class="sr-only" for="message">Write a post&hellip;</label>
-								<div class="input-group">
-									<input class="form-control" type="text" id="message" name="message" placeholder="Write a post&hellip;">
-									<span class="input-group-btn">
-										<button class="btn btn-secondary" type="button">
-											<i class="icon icon-camera"></i>
-										</button>
-									</span>
-								</div>
+								<textarea class="form-control" id="message" name="message" required></textarea>
 							</fieldset>
+							<div class="form-group text-xs-right">
+								<button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="left" title="Attach Photo">
+									<i class="icon icon-camera"></i>
+								</button>
+								<button class="btn btn-primary" type="submit">Post</button>
+							</div>
 						</form>
-					</div>
-				</main>
-			</div>
+					</main>
+					<repeat group="{{ @posts }}" value="{{ @post }}">
+						<article class="card-block" data-id="{{ @post->id }}">
+							<div class="media media-post">
+								<a class="media-left" href="{{ @BASE }}/u/{{ @post->page_name }}">
+									<img class="media-object profile-pic" src="//gravatar.com/avatar?d=mm" alt>
+								</a>
+								<div class="media-body">
+									<header>
+										<a class="name" href="{{ @BASE }}/u/{{ @post->page_name }}">{{ @post->page_name | esc }}</a>
+										<span class="timestamp" data-datetime="{{ @post->created_at }}"></span>
+									</header>
+									<p class="has-ciphertext" data-ciphertext="{{ @post->content | esc }}" data-page-id="{{ @post->page_id }}"></p>
+								</div>
+							</div>
+						</article>
+					</repeat>
+				</div>
+			</dev>
 			<div class="col-lg-3 col-md-4 col-side">
 				<include href="parts/footer-card.html" />
 			</div>
@@ -39,6 +54,7 @@
 
 <script>
 $(function() {
+	// Handle post submission
 	$('.frm-post').submit(function(e) {
 		e.preventDefault();
 		App.post.post($('#message').val(), $(this).data('user-id'), function(data) {

@@ -34,4 +34,7 @@ module.exports = function init() {
 		App.store = sessionStorage;
 	}
 
+	// Decrypt any ciphertexts
+	App.post.decrypt();
+
 };

@@ -47,7 +47,9 @@ body {
 	min-height: $profile-card-cover-size;
 }
 .card-profile-pic {
-	@include center-block;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 	width: $profile-img-size-card;
 }
 .card-profile-img {
@@ -68,7 +70,7 @@ body {
 
 // Stream card (stacked cards in a single card)
 .card-stream {
-	> .card-block:first-child .form-group {
+	> .card-block:first-child .form-group:last-child {
 		margin-bottom: 0;
 	}
 	> .card-block:not(:last-child) {
@@ -107,6 +109,14 @@ body {
 	.profile-pic {
 		width: $profile-img-size-comment;
 		height: $profile-img-size-comment;
+	}
+}
+
+// Pending ciphertext regions
+.has-ciphertext:empty {
+	opacity: 0.5;
+	&:before {
+		content: '\2026';
 	}
 }
 

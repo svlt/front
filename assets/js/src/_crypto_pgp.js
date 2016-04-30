@@ -56,6 +56,22 @@ module.exports = {
 	},
 
 	/**
+	 * Sign a message with a PGP private key
+	 * @param  {String}   message
+	 * @param  {String}   privateKey
+	 * @param  {Function} callback
+	 * @return {Object}   Promise
+	 */
+	sign: function(message, privateKey, callback) {
+		if(typeof privateKey == 'string') {
+			privateKey = openpgp.key.readArmored(privateKey).keys[0];
+		}
+		return openpgp.signClearMessage(privateKey, message).then(function(data) {
+			callback(data);
+		});
+	},
+
+	/**
 	 * Decrypt an armored PGP message with a PGP private key
 	 * @param  {String}   message
 	 * @param  {String}   privateKey

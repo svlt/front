@@ -25,9 +25,8 @@ class User extends \Controller {
 	 */
 	function stream($fw) {
 		$this->_requireLogin();
-
-		// TODO: load stream data
-
+		$stream = \Helper\Api\Post::getStream();
+		$fw->set('posts', $stream);
 		$this->_render('user/stream.html');
 	}
 
