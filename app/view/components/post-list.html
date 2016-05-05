@@ -1,0 +1,16 @@
+<repeat group="{{ @posts }}" value="{{ @post }}">
+	<article class="card-block" data-id="{{ @post->id }}">
+		<div class="media media-post">
+			<a class="media-left" href="{{ @BASE }}/u/{{ @post->page_username }}">
+				<img class="media-object profile-pic" src="//gravatar.com/avatar?d=mm" alt>
+			</a>
+			<div class="media-body">
+				<header>
+					<a class="name" href="{{ @BASE }}/u/{{ @post->page_username }}">{{ @post->page_name | esc }}</a>
+					<span class="timestamp" data-datetime="{{ @post->created_at }}"></span>
+				</header>
+				<p class="has-ciphertext" data-ciphertext="{{ @post->content | esc }}" data-page-id="{{ @post->page_id }}"></p>
+			</div>
+		</div>
+	</article>
+</repeat>

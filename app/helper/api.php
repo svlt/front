@@ -55,6 +55,12 @@ class Api {
 			curl_setopt($curl, CURLOPT_HTTPHEADER, $headers);
 		}
 
+		// Disable SSL checks during development
+		if(\App::fw()->get('DEBUG') >= 2) {
+			curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false);
+			curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, false);
+		}
+
 		// Perform request
 		$data = curl_exec($curl);
 		curl_close($curl);

@@ -13,6 +13,8 @@ class User extends \Controller {
 		$user = \Helper\Api\User::get($params['username']);
 		if($user->id) {
 			$fw->set('this_user', $user);
+			$stream = \Helper\Api\Post::getPage($user->username);
+			$fw->set('posts', $stream);
 			$this->_render('user/single.html');
 		} else {
 			$fw->error(404);

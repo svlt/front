@@ -12,7 +12,7 @@
 				<set cardUser="{{ @user }}" />
 				<include href="components/profile-card.html" />
 			</div>
-			<dev class="col-lg-6 col-md-8 col-stream">
+			<div class="col-lg-6 col-md-8 col-stream">
 				<div class="card card-stream">
 					<main class="card-block">
 						<form class="frm-post" data-user-id="{{ @user->id }}">
@@ -28,24 +28,9 @@
 							</div>
 						</form>
 					</main>
-					<repeat group="{{ @posts }}" value="{{ @post }}">
-						<article class="card-block" data-id="{{ @post->id }}">
-							<div class="media media-post">
-								<a class="media-left" href="{{ @BASE }}/u/{{ @post->page_name }}">
-									<img class="media-object profile-pic" src="//gravatar.com/avatar?d=mm" alt>
-								</a>
-								<div class="media-body">
-									<header>
-										<a class="name" href="{{ @BASE }}/u/{{ @post->page_name }}">{{ @post->page_name | esc }}</a>
-										<span class="timestamp" data-datetime="{{ @post->created_at }}"></span>
-									</header>
-									<p class="has-ciphertext" data-ciphertext="{{ @post->content | esc }}" data-page-id="{{ @post->page_id }}"></p>
-								</div>
-							</div>
-						</article>
-					</repeat>
+					<include href="components/post-list.html" />
 				</div>
-			</dev>
+			</div>
 			<div class="col-lg-3 col-md-4 col-side">
 				<include href="parts/footer-card.html" />
 			</div>

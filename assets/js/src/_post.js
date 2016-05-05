@@ -30,7 +30,7 @@ module.exports = {
 			var $el = $(el),
 				symmKey = App.session.keystore.getSymmetricKey($el.attr('data-page-id')),
 				plaintext = App.crypto.symmetric.decrypt($el.attr('data-ciphertext'), symmKey);
-			$el.text(plaintext);
+			$el.removeClass('has-ciphertext').addClass('had-ciphertext').text(plaintext);
 		});
 	}
 

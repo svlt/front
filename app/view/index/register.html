@@ -13,13 +13,13 @@
 				<form id="frm-register" style="display: block;">
 					<fieldset class="form-group">
 						<label for="register-name">Display Name</label>
-						<input class="form-control" type="text" name="name" id="register-name" required autofocus>
+						<input class="form-control" type="text" name="name" id="register-name" value="{{ @@GET.name | esc }}" required autofocus>
 						<small class="text-muted">This is the name that will be displayed publicly for people trying to find you. It can be changed at any time.</small>
 					</fieldset>
 					<fieldset class="form-group">
 						<label for="register-username">Username</label>
-						<input class="form-control" type="text" name="username" id="register-username" required>
-						<small class="text-muted">Your username will be used to log in instead of an email address.</small>
+						<input class="form-control" type="text" name="username" id="register-username" value="{{ @@GET.username | esc }}" required>
+						<small class="text-muted">Your username will be used to log in instead of an email address. It will be visible to other users.</small>
 					</fieldset>
 					<fieldset class="form-group">
 						<label for="register-passphrase">Passphrase</label>
@@ -115,6 +115,16 @@
 
 			});
 
+		});
+		$('#register-username').change(function(e) {
+			var $this = $(this);
+			if($this.val()) {
+				$.get(API + 'u/' + $this.val() + '.json', function() {
+					$this.parents('.form-group').addClass('has-danger');
+				}).error(function() {
+					$this.parents('.form-group').removeClass('has-danger');
+				});
+			}
 		});
 		$('#register-passphrase').change(function(e) {
 

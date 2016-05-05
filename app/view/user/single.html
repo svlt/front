@@ -19,26 +19,70 @@
 	<div class="container">
 		<div class="row">
 			<div class="col-sm-3">
-				<div class="card card-block">
-					<h4 class="card-title">About</h4>
-					<p class="text-muted">This profile is private.</p>
-				</div>
+				<check if="{{ @this_user->id == @user->id }}">
+					<true>
+						<set cardUser="{{ @this_user }}" />
+						<include href="components/profile-card.html" />
+					</true>
+					<false>
+						<div class="card card-block">
+							<h4 class="card-title">About</h4>
+							<p class="text-muted">This profile is private.</p>
+						</div>
+					</false>
+				</check>
 			</div>
-			<div class="col-sm-6">
-				<div class="card card-block">
-					<p>Add {{ @this_user->name }} as a buddy to view their posts.</p>
-					<div class="text-xs-right">
-						<button class="btn btn-primary-outline">
-							<i class="icon icon-add-user"></i>&ensp;Add Buddy
-						</button>
+			<check if="{{ @this_user->id == @user->id }}">
+				<true>
+					<div class="col-lg-6 col-md-8 col-stream">
+						<div class="card card-stream">
+							<main class="card-block">
+								<form class="frm-post" data-user-id="{{ @user->id }}">
+									<fieldset class="form-group">
+										<label class="sr-only" for="message">Write a post&hellip;</label>
+										<textarea class="form-control" id="message" name="message" required></textarea>
+									</fieldset>
+									<div class="form-group text-xs-right">
+										<button class="btn btn-secondary" type="button" data-toggle="tooltip" data-placement="left" title="Attach Photo">
+											<i class="icon icon-camera"></i>
+										</button>
+										<button class="btn btn-primary" type="submit">Post</button>
+									</div>
+								</form>
+							</main>
+							<include href="components/post-list.html" />
+						</div>
 					</div>
-				</div>
-			</div>
+				</true>
+				<false>
+					<div class="col-sm-6">
+						<div class="card card-block">
+							<p>Add {{ @this_user->name }} as a buddy to view their posts.</p>
+							<div class="text-xs-right">
+								<button class="btn btn-primary-outline">
+									<i class="icon icon-add-user"></i>&ensp;Add Buddy
+								</button>
+							</div>
+						</div>
+					</div>
+				</false>
+			</check>
 			<div class="col-sm-3">
 				<include href="parts/footer-card.html" />
 			</div>
 		</div>
 	</div>
 
+<script>
+$(function() {
+	// Handle post submission
+	$('.frm-post').submit(function(e) {
+		e.preventDefault();
+		App.post.post($('#message').val(), $(this).data('user-id'), function(data) {
+			console.log(data);
+		});
+	});
+});
+</script>
 </body>
 </html>

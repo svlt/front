@@ -29,11 +29,27 @@
 						</li>
 					</ul>
 				</div>
-				<div class="col-sm-6 text-xs-right">
-					<a href="{{ @BASE }}/register" class="btn btn-primary">Create an Account</a>
-					<p>Free for basic personal use</p>
+				<div class="col-sm-6 col-lg-4 col-lg-offset-2">
+					<h2 class="text-xs-right-">Create an Account</h2>
+					<p class="text-xs-right-">Free for basic personal use</p>
+					
+					<form id="frm-register" action="{{ @BASE }}/register" method="get">
+						<fieldset class="form-group">
+							<label class="sr-only" for="register-name">Display Name</label>
+							<input class="form-control" type="text" name="name" placeholder="Display Name" required>
+						</fieldset>
+						<fieldset class="form-group">
+							<label class="sr-only" for="register-username">Username</label>
+							<input class="form-control" type="text" name="username" placeholder="Username" required>
+						</fieldset>
+							<button type="submit" class="btn btn-success">Sign Up</button>
+						<div class="text-xs-right">
+						</div>
+					</form>
 
-					<p>Already have an account? <a href="{{ @BASE }}/auth">Sign In</a></p>
+					<br><br>
+
+					<p class="text-xs-right-">Already have an account? <a href="{{ @BASE }}/auth">Sign In</a></p>
 				</div>
 			</div>
 		</div>
