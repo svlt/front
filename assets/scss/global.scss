@@ -80,22 +80,23 @@ body {
 
 // Posts and comments
 .media-post {
-	> .media-body > header {
-		@include clearfix;
-		.name {
-			@include pull-left;
-			font-weight: bold;
-			color: inherit;
-		}
-		.timestamp {
-			@include pull-right;
-			font-size: $font-size-sm;
-			color: $text-muted;
-		}
-	}
 	.profile-pic {
 		width: $profile-img-size-post;
 		height: $profile-img-size-post;
+	}
+}
+.media-heading {
+	@include clearfix;
+	margin-bottom: 0;
+	.name {
+		@include pull-left;
+		font-weight: bold;
+		color: inherit;
+	}
+	.timestamp {
+		@include pull-right;
+		font-size: $font-size-sm;
+		color: $text-muted;
 	}
 }
 .media-comment {

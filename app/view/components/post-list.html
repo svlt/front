@@ -1,11 +1,14 @@
 <repeat group="{{ @posts }}" value="{{ @post }}">
-	<article class="card-block" data-id="{{ @post->id }}">
+	<article class="card-block card-post" data-id="{{ @post->id }}">
 		<div class="media media-post">
 			<a class="media-left" href="{{ @BASE }}/u/{{ @post->page_username }}">
 				<img class="media-object profile-pic" src="//gravatar.com/avatar?d=mm" alt>
 			</a>
 			<div class="media-body">
-				<header>
+				<header class="media-heading">
+					<button type="button" class="close" data-dismiss="alert" aria-label="Delete Post" data-toggle="tooltip" data-placement="left" title="Delete Post">
+						<span aria-hidden="true">&times;</span>
+					</button>
 					<a class="name" href="{{ @BASE }}/u/{{ @post->page_username }}">{{ @post->page_name | esc }}</a>
 					<span class="timestamp" data-datetime="{{ @post->created_at }}"></span>
 				</header>

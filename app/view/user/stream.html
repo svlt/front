@@ -46,6 +46,23 @@ $(function() {
 			console.log(data);
 		});
 	});
+
+	// Handle post deletion
+	$('.col-stream').on('click', '.card-post .close', function(e) {
+		if(e.which == 1) {
+			var $post = $(this).parents('.card-post');
+			$.post(API + 'post/' + $post.attr('data-id') + '.json', {
+				_method: 'DELETE',
+				_token: Cookies.get('session_token')
+			}, function (data) {
+				$post.remove();
+			}).fail(function () {
+				$post.append(
+					$('<div />').addClass('alert alert-danger').text('Failed to delete post!')
+				);
+			});
+		}
+	});
 });
 </script>
 </body>
