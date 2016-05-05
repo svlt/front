@@ -31,7 +31,7 @@
 				</div>
 				<div class="col-sm-6 col-lg-4 col-lg-offset-2">
 					<h2>Create an Account</h2>
-					<p>Free for basic personal use</p>
+					<br>
 					
 					<form id="frm-register" action="{{ @BASE }}/register" method="get">
 						<fieldset class="form-group">
@@ -42,14 +42,16 @@
 							<label class="sr-only" for="register-username">Username</label>
 							<input class="form-control" type="text" name="username" placeholder="Username" required>
 						</fieldset>
+						<p>
 							<button type="submit" class="btn btn-success">Sign Up</button>
-						<div class="text-xs-right">
-						</div>
+							&ensp;Free for basic personal use
+						</p>
 					</form>
-
-					<br><br>
-
 					<p>Already have an account? <a href="{{ @BASE }}/auth">Sign In</a></p>
+
+					<hr>
+
+					<p>Business accounts will be available after release.</p>
 				</div>
 			</div>
 		</div>
