@@ -8,7 +8,7 @@
 
 	<div class="jumbotron jumbotron-fluid jumbotron-profile profile-banner bg-inverse" data-username="{{ @this_user->username }}">
 		<div class="container">
-			<img class="profile-pic" src="//gravatar.com/avatar?d=mm" alt>
+			<img class="profile-pic" src="{{ @BASE }}/assets/buddy-img.svg" alt>
 			<h3>{{ @this_user->name }}</h3>
 			<check if="{{ @this_user->tagline }}">
 				<p>{{ @this_user->tagline }}</p>
