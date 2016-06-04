@@ -78,8 +78,29 @@ $(function() {
 	// Handle post submission
 	$('.frm-post').submit(function(e) {
 		e.preventDefault();
+		var message = $('#message').val();
+		$(this).prop('disabled', true);
 		App.post.post($('#message').val(), $(this).data('user-id'), function(data) {
-			console.log(data);
+			$('#message').val('');
+			var html =
+				`<article class="card-block card-post" data-id="${data.id}">
+					<div class="media media-post">
+						<a class="media-left" href="${BASE}/u/${data.page_username}">
+							<img class="media-object profile-pic" src="${BASE}/assets/buddy-img.svg" alt>
+						</a>
+						<div class="media-body">
+							<header class="media-heading">
+								<button type="button" class="close" data-dismiss="alert" aria-label="Delete Post" data-toggle="tooltip" data-placement="left" title="Delete Post">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<a class="name" href="${BASE}/u/${data.page_username}">${data.page_name}</a>
+								<span class="timestamp" data-datetime="${data.created_at}"></span>
+							</header>
+							<p>${message}</p>
+						</div>
+					</div>
+				</article>`;
+			$('.frm-post').parent().after(html);
 		});
 	});
 });
