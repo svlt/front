@@ -9,7 +9,7 @@ $fw->route('GET /manifest.json', 'Controller\\Index->manifest');
 $fw->route('GET /register', 'Controller\\Index->register');
 $fw->route('POST /register', 'Controller\\Index->registerPost');
 $fw->route('GET /auth', 'Controller\\Index->auth');
-$fw->route('POST /auth', 'Controller\\Index->authPost');
+$fw->route('POST /cspreport', 'Controller\\Index->cspreport');
 
 // Users
 $fw->route('GET /stream', 'Controller\\User->stream');

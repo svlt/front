@@ -4,7 +4,11 @@ namespace Controller;
 
 class Index extends \Controller {
 
-	function index($fw) {
+	/**
+	 * GET /
+	 * @param \Base $fw
+	 */
+	function index(\Base $fw) {
 		if($this->_getUser()) {
 			$fw->reroute('/stream');
 			return;
@@ -12,11 +16,19 @@ class Index extends \Controller {
 		$this->_render('index/index.html');
 	}
 
-	function style($fw) {
+	/**
+	 * GET /style
+	 * @param \Base $fw
+	 */
+	function style(\Base $fw) {
 		$this->_render('index/style.html');
 	}
 
-	function manifest($fw) {
+	/**
+	 * GET /manifest.json
+	 * @param \Base $fw
+	 */
+	function manifest(\Base $fw) {
 		header('Content-type: application/json');
 		echo json_encode([
 			'lang' => 'en',
@@ -36,11 +48,19 @@ class Index extends \Controller {
 		]);
 	}
 
-	function register($fw) {
+	/**
+	 * GET /register
+	 * @param \Base $fw
+	 */
+	function register(\Base $fw) {
 		$this->_render('index/register.html');
 	}
 
-	function registerPost($fw) {
+	/**
+	 * POST /register
+	 * @param \Base $fw
+	 */
+	function registerPost(\Base $fw) {
 		try {
 			$token = \Helper\Api\User::register($fw->get('POST'));
 			$fw->set('COOKIE.session_token', $token);
@@ -51,8 +71,23 @@ class Index extends \Controller {
 		}
 	}
 
-	function auth($fw) {
+	/**
+	 * GET /auth
+	 * @param \Base $fw
+	 */
+	function auth(\Base $fw) {
 		$this->_render('index/auth.html');
+	}
+
+	/**
+	 * POST /cspreport
+	 * Content-Security-Policy violation report endpoint
+	 *
+	 * @param \Base $fw
+	 */
+	function cspreport(\Base $fw) {
+		$log = new \Log('cspreport.log');
+		$log->write(file_get_contents('php://input'));
 	}
 
 }

@@ -6,10 +6,10 @@ class User extends \Controller {
 
 	/**
 	 * GET /u/@username
-	 * @param Base $fw
+	 * @param \Base $fw
 	 * @param array $params
 	 */
-	function base($fw, $params) {
+	function base(\Base $fw, array $params) {
 		$user = \Helper\Api\User::get($params['username']);
 		if($user->id) {
 			$fw->set('title', $user->name);
@@ -24,9 +24,9 @@ class User extends \Controller {
 
 	/**
 	 * GET /stream
-	 * @param Base $fw
+	 * @param \Base $fw
 	 */
-	function stream($fw) {
+	function stream(\Base $fw) {
 		$this->_requireLogin();
 		$stream = \Helper\Api\Post::getStream();
 		$fw->set('posts', $stream);
@@ -35,9 +35,9 @@ class User extends \Controller {
 
 	/**
 	 * GET|POST /logout
-	 * @param Base $fw
+	 * @param \Base $fw
 	 */
-	function logout($fw) {
+	function logout(\Base $fw) {
 		if($fw->get('COOKIE.session_token') == $fw->get('GET.session')) {
 			\Helper\Api\User::logout();
 			$fw->set('COOKIE.session_token', null);
